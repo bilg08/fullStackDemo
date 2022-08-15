@@ -1,21 +1,14 @@
-import React, { createContext, useState } from 'react';
+import React from 'react';
 import './App.css';
-import {DevelopSiteMain} from "./components/DeveloperSite/developorSiteMain/app"
+import {CartsContainer} from "./components/clickHeighten/container/app"
 
-export const readMoreContext = createContext();
 
 function App() {
   
-  const [IsReadMore,setReadMore] = useState(true)
   return (
-   
         <div className="App">
-           <readMoreContext.Provider value={{IsReadMore, setReadMore}}>
-                 <DevelopSiteMain />
-            </readMoreContext.Provider>
+            <CartsContainer/>
         </div>
-    
-    
   );
 }
 export default App;
