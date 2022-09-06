@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './App.css';
-import { StopWatch } from './components/stopWatch/stopwatch';
+import { PrimeNumber } from './components/anhniiToo/anhniiToo';
 
 const App =()=>{
   return(
     <div>
-      <StopWatch/>
+      <PrimeNumber/>
     </div>
   )
 }

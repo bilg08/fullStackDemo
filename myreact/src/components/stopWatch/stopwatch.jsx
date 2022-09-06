@@ -1,27 +1,26 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 
-let initialState={
-    second:0
-}
-const reducer=(state,action)=>{
-if(action.type==='start'){
-    setInterval(() => {
-      console.log(state.second)
-    },1000);
-    return{second:state.second+1}
-    
-}else if(action.type==='stop'){
-    return {second:state.second-1}
-}
-}
+
 
 export const StopWatch=()=>{
-    const [state,dispatch]=useReducer(reducer,initialState);
+    let [count,setCount]=useState(0);
+    const [isRunning,setIsRunning]=useState(false);
+
+    useEffect(()=>{
+        if(isRunning){
+            const interval=setInterval(()=>{
+                setCount(count+1)
+            },1000);
+        return()=>{
+            clearInterval(interval);
+        }
+        }
+    })
     return(
         <div>
-            <div>{`second${state.second}`}</div>
-            <button onClick={()=>dispatch({type:'start'})}>Эхлэх</button>
-            <button onClick={()=>dispatch({type:'stop'})}>Зогс</button>
+            <div>{count}</div>
+            <button onClick={()=>setIsRunning(true)}>Эхлэх</button>
+            <button onClick={()=>setIsRunning(false)}>Зогс</button>
         </div>
     )
 }
