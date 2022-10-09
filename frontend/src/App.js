@@ -24,9 +24,15 @@ function App() {
       </div>
       <div>
         {data.length}
-        {data.map((el) => (
-          <h1 key={el.firstName}>{el.firstName}</h1>
-        ))}
+        {data.map((el) => {
+          return (
+            <div key = {el.firstName}>
+              <h1 key={el.firstName}>{el.firstName}</h1>
+              <h1 key={el.lastName+1}>{el.firstName}</h1>
+            </div>
+          );
+        }
+        )}
       </div>
     </div>
   );
