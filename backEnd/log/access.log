@@ -81,3 +81,6 @@
 ::1 - - [09/Oct/2022:13:07:06 +0000] "GET /categories/634276f8eb3a7bd112561cf HTTP/1.1" 500 142 "-" "PostmanRuntime/7.29.2"
 ::1 - - [09/Oct/2022:13:07:18 +0000] "GET /categories/634276f8eb3a7bd112561cf HTTP/1.1" 500 142 "-" "PostmanRuntime/7.29.2"
 ::1 - - [09/Oct/2022:13:07:30 +0000] "GET /categories/634276f8eb3a7bd112561cf HTTP/1.1" 500 142 "-" "PostmanRuntime/7.29.2"
+::1 - - [09/Oct/2022:13:26:15 +0000] "GET /categories/634276f8eb3a7bd112561cf HTTP/1.1" 500 142 "-" "PostmanRuntime/7.29.2"
+::1 - - [09/Oct/2022:13:27:29 +0000] "GET /categories HTTP/1.1" 200 469 "-" "PostmanRuntime/7.29.2"
+::1 - - [09/Oct/2022:13:27:41 +0000] "GET /categories/6342c44e0e17f89c6721b0f8 HTTP/1.1" 500 97 "-" "PostmanRuntime/7.29.2"

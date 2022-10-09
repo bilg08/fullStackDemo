@@ -1,4 +1,5 @@
 const express = require("express");
+const MyError = require('../utils/myError')
 
 const Category = require("../models/category");
 const app = express();
@@ -30,10 +31,7 @@ exports.getCategory = async (req, res, next) => {
     const category = await Category.findById(id);
 
     if (!category) {
-      return res.status(400).json({
-        succes: false,
-        data: `${id} -тай категори алга байна`,
-      });
+      throw new MyError(`${id} -тай категори алга байна`,400);
     }
     res.status(200).json({
       succes: true,
