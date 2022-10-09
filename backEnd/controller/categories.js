@@ -11,7 +11,7 @@ app.use((res) => {
   );
 });
 
-exports.getCategories = async (req, res) => {
+exports.getCategories = async (req, res,next) => {
   try {
     const category = await Category.find();
 
@@ -20,10 +20,7 @@ exports.getCategories = async (req, res) => {
       data: category,
     });
   } catch (error) {
-    res.status(400).json({
-      succes: false,
-      data: "aldaa",
-    });
+    next(err)
   }
 };
 
@@ -46,7 +43,7 @@ exports.getCategory = async (req, res, next) => {
     next(error);
   }
 };
-exports.createCategory = async (req, res) => {
+exports.createCategory = async (req, res,next) => {
   try {
     const category = await Category.create(req.body);
     res.status(200).json({
@@ -57,7 +54,7 @@ exports.createCategory = async (req, res) => {
     next(error);
   }
 };
-exports.uptadeCategory = async (req, res) => {
+exports.uptadeCategory = async (req, res,next) => {
   const { id } = req.params;
   try {
     const category = await Category.findByIdAndUpdate(id, req.body, {
@@ -79,7 +76,7 @@ exports.uptadeCategory = async (req, res) => {
        next(error)
   }
 };
-exports.deleteCategory = async (req, res) => {
+exports.deleteCategory = async (req, res,next) => {
   const { id } = req.params;
   try {
     const category = await Category.findByIdAndDelete(id);
