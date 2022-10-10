@@ -1,0 +1,30 @@
+[
+  {
+    "_id": "6342c25c0efb0c2a64863ee5",
+    "name": "HELLOWORLDFROMUB",
+    "description": "HELLOWORLDFROMUBDESCRIPTION",
+    "photo": "no-photo.jpeg",
+    "__v": 0
+  },
+  {
+    "_id": "6342c40d0e17f89c6721b0f7",
+    "name": "УРАН ЗОХИОЛ",
+    "description": "УРАН ЗОХИОЛ ЯНЗИЙНШДЭЭ",
+    "photo": "no-photo.jpeg",
+    "__v": 0
+  },
+  {
+    "_id": "6342c44e0e17f89c6721b0f9",
+    "name": "МАТЕМАТИК",
+    "description": "МАТЕМАТИК ЯНЗИЙНШДЭЭ",
+    "photo": "no-photo.jpeg",
+    "__v": 0
+  },
+  {
+    "_id": "6343cab93d836c271b803e73",
+    "name": "МАТЕМАТИК2",
+    "description": "МАТЕМАТИК ЯНЗИЙНШДЭЭ",
+    "photo": "no-photo.jpeg",
+    "__v": 0
+  }
+]

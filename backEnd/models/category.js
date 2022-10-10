@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const {slugify} = require('transliteration')
 
 const CategoryScheme = new mongoose.Schema({
   name: {
@@ -8,29 +9,29 @@ const CategoryScheme = new mongoose.Schema({
     trim: true,
     maxLength: [50, "НЭР УРТ ИХ БАЙНА"],
   },
+  slug: String,
   description: {
     type: String,
     required: [true, "KATEGORIIN NERIIG ORUULNA"],
     maxLength: [50, "НЭР УРТ ИХ БАЙНА"],
   },
-  // description: {
-  //   required: [true, "KATEGORIIN ТАЙЛБАР ОРУУЛНА УУ"],
-  //   maxLength: [500, "ТАЙЛБАРЫН УРТ ИХ БАЙНА"],
-  //   },
   photo: {
     type: String,
     default: "no-photo.jpeg",
   },
   averageRating: {
     type: Number,
-    // minLength: [1, 'Rating хамгийн багадаа 1 байна'],
-    // maxLength:[10,'Rating хамгийн ихдээ 10 байна']
+    min: [1, "Rating хамгийн багадаа 1 байна"],
+    max: [10, "Rating хамгийн ихдээ 10 байна"],
   },
-  //   averagePrice: Number,
-  //   createdAt: {
-  //       type: Date,
-  //       default:Date.now
-  //   }
+  averagePrice: Number,
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
-
+CategoryScheme.pre('save', function (next) {
+  this.slug = slugify(this.name)
+  next();
+})
 module.exports = mongoose.model('Category',CategoryScheme)
