@@ -13,13 +13,41 @@ app.use(express.json());
 // });
 
 exports.getCategories = asyncHandler(async (req, res, next) => {
-    const category = await Category.find();
-
-    res.status(200).json({
-      succes: true,
-      data: category,
-    });
+  //localhost:8000/categories?select=name slug averageRating&averageRating[$gt]=8
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 100;
+  const select = req.query.select;
+  const sort = req.query.sort;
   
+  ["page", "limit", "select", "sort"].forEach(el => delete req.query[el]);
+
+
+  //pagination
+  const total = await Category.countDocuments();
+  const pageCount = Math.ceil(total / limit);
+  const start = (page - 1) * limit + 1;
+  let end = start + limit - 1;
+  if (end > total) end = total;
+  const pagination = {total,pageCount,start,end};
+
+  if (page < pageCount) pagination.nextPage = page + 1;
+  if (page > 1) pagination.prevPage = page - 1;
+
+
+
+
+
+
+
+
+
+// localhost:8000/categories?select=name slug averageRating&sort=averageRating
+  const category = await Category.find(req.query, select).sort(sort).limit(limit).skip(start - 1);
+  res.status(200).json({
+    succes: true,
+    data: category,
+    pagination,
+  });
 });
 
 exports.getCategory = asyncHandler(async (req, res, next) => {
