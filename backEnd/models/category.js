@@ -7,13 +7,13 @@ const CategoryScheme = new mongoose.Schema({
     required: [true, "KATEGORIIN NERIIG ORUULNA"],
     unique: true,
     trim: true,
-    maxLength: [50, "НЭР УРТ ИХ БАЙНА"],
+    maxLength: [500, "НЭР УРТ ИХ БАЙНА"],
   },
   slug: String,
   description: {
     type: String,
     required: [true, "KATEGORIIN NERIIG ORUULNA"],
-    maxLength: [50, "НЭР УРТ ИХ БАЙНА"],
+    maxLength: [5000, "НЭР УРТ ИХ БАЙНА"],
   },
   photo: {
     type: String,

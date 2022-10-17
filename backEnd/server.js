@@ -8,6 +8,7 @@ const express = require("express");
 const logger = require("./middleware/logger.js");
 //Route
 const categoriesRoute = require('./routes/categories');
+const booksRoutes = require("./routes/books");
 var rfs = require('rotating-file-stream');
 const dotenv = require('dotenv');
 //.ENV
@@ -41,6 +42,7 @@ app.use(express.json());
 app.use(logger);
 app.use(morgan("combined", { stream: accessLogStream }));
 app.use(cors(corsOptions));
+app.use('/books',booksRoutes)
 app.use("/categories", categoriesRoute)
   app
     .use(errorHandler)

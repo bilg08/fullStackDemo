@@ -3,6 +3,7 @@ const MyError = require('../utils/myError')
 const asyncHandler = require('../middleware/asyncHandler')
 const Category = require("../models/category");
 const app = express();
+
 app.use(express.json());
 // app.use((res) => {
 //   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -33,14 +34,7 @@ exports.getCategories = asyncHandler(async (req, res, next) => {
   if (page < pageCount) pagination.nextPage = page + 1;
   if (page > 1) pagination.prevPage = page - 1;
 
-
-
-
-
-
-
-
-
+  
 // localhost:8000/categories?select=name slug averageRating&sort=averageRating
   const category = await Category.find(req.query, select).sort(sort).limit(limit).skip(start - 1);
   res.status(200).json({
@@ -52,8 +46,8 @@ exports.getCategories = asyncHandler(async (req, res, next) => {
 
 exports.getCategory = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
-   const category = await Category.findById(id);
-
+  const category = await Category.findById(id);
+  
     if (!category) {
       throw new MyError(`${id} -тай категори алга байна`,400);
     }
