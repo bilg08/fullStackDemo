@@ -30,6 +30,13 @@ const CategoryScheme = new mongoose.Schema({
     default: Date.now,
   },
 });
+
+
+CategoryScheme.pre('remove', async function (next) {
+ await this.$model('Book').deleteMany({category:this.id})
+  next();
+});
+
 CategoryScheme.pre('save', function (next) {
   this.slug = slugify(this.name)
   next();

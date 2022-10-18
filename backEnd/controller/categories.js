@@ -48,9 +48,14 @@ exports.getCategory = asyncHandler(async (req, res, next) => {
   const { id } = req.params;
   const category = await Category.findById(id);
   
-    if (!category) {
-      throw new MyError(`${id} -тай категори алга байна`,400);
-    }
+  //   if (!category) {
+  //     throw new MyError(`${id} -тай категори алга байна`,400);
+  // }
+  // category.name += '-';
+  // category.save(function (err) {
+  //   if (err) console.log(err);
+  //   console.log('saved');
+  // })
     res.status(200).json({
       succes: true,
       data: category,
@@ -87,11 +92,11 @@ exports.uptadeCategory = asyncHandler(async (req, res,next) => {
 
 exports.deleteCategory = asyncHandler(async (req, res,next) => {
   const { id } = req.params;
-    const category = await Category.findByIdAndDelete(id);
-
+    const category = await Category.findById(id);
     if (!category) {
       throw new MyError(`${id} -тай категори алга байна`, 403);
-    }
+  }
+  category.remove();
     res.status(400).json({
       succes: true,
       data: category,
