@@ -103,6 +103,7 @@ exports.deleteCategory = asyncHandler(async (req, res,next) => {
     });
 
 });
+
 //ЭНЭ БИЧЭГЛЭЛТЭЙ АДИЛХАН
 // exports.deleteCategory = async (req, res,next) => {
 //   const { id } = req.params;

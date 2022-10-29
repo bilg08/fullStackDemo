@@ -48,18 +48,37 @@ const BookScheme = new Schema({
     type: [String],
   },
   category: {
-    // type: Schema.ObjectId,
     type: mongoose.Schema.ObjectId,
     ref: "Category",
     required: true,
+  },
+  createdUser: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
+  },
+  updatedUser: {
+    type: mongoose.Schema.ObjectId,
+    ref: "User",
   },
   createdAt: {
     type: Date,
     default: Date.now,
   },
 });
-// BookScheme.pre("save", function (next) {
-//   this.slug = slugify(this.name);
-//   next();
-// });
+BookScheme.statics.computeCategoryAveragePrice = async function (catId) {
+  const obj = await this.aggregate([
+    { $match: { category: catId } },
+    { $group: { _id: "$category", avgPrice: { $avg: '$price' } } }
+  ]);
+  await this.model("Category").findByIdAndUpdate(catId, {
+    averagePrice: obj[0].avgPrice,
+  });
+  return obj;
+}
+BookScheme.post('save', function () {
+  this.constructor.computeCategoryAveragePrice(this.category);
+})
+BookScheme.pre("remove", function () {
+  this.constructor.computeCategoryAveragePrice(this.category);
+});
 module.exports = mongoose.model("Book", BookScheme);

@@ -3,12 +3,14 @@ const fs = require("fs");
 const cors = require("cors");
 const path = require("path");
 const morgan = require("morgan");
+const fileUpload = require('express-fileupload')
 //Express
 const express = require("express");
 const logger = require("./middleware/logger.js");
 //Route
 const categoriesRoute = require('./routes/categories');
 const booksRoutes = require("./routes/books");
+const usersRoutes = require("./routes/user");
 var rfs = require('rotating-file-stream');
 const dotenv = require('dotenv');
 //.ENV
@@ -38,11 +40,12 @@ connectDb();
 
 
 //BODY_PARSER
+app.use(fileUpload())
 app.use(express.json());
-app.use(logger);
 app.use(morgan("combined", { stream: accessLogStream }));
 app.use(cors(corsOptions));
-app.use('/books',booksRoutes)
+app.use('/books', booksRoutes)
+app.use('/users',usersRoutes)
 app.use("/categories", categoriesRoute)
   app
     .use(errorHandler)
