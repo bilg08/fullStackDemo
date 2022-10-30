@@ -2,7 +2,8 @@ const express = require("express");
 const MyError = require("../utils/myError");
 const asyncHandler = require("../middleware/asyncHandler");
 const User = require("../models/user");
-
+const crypto = require('crypto');
+const sendMail = require("../utils/email");
 
 exports.register = asyncHandler(async (req, res, next) => {
     
@@ -114,17 +115,54 @@ exports.deleteUser = asyncHandler(async (req, res,next) => {
 
 });
 
-//ЭНЭ БИЧЭГЛЭЛТЭЙ АДИЛХАН
-// exports.deleteUser = async (req, res,next) => {
-//   const { id } = req.params;
-//     const User = await User.findByIdAndDelete(id);
 
-//     if (!User) {
-//       throw new MyError(`${id} -тай категори алга байна`, 400);
-//     }
-//     res.status(400).json({
-//       succes: true,
-//       data: User,
-//     });
+exports.forgotPassword = asyncHandler(async (req, res, next) => {
+  if (!req.body.email) {
+    throw new MyError(`ТА СЭРГЭЭХ ЕМАЙЛ ХАЯГАА ОРУУЛНА УУ`, 403);
+  }
+  const user = await User.findOne({ email: req.body.email });
+  if (!user) {
+    throw new MyError(` ЕМАЙЛ ХАЯГ БУРУУ БАЙНА`, 403);  
+  }
+  const resetPasswordToken = user.generatePasswordChangeToken();
+  await user.save();
+  const link = `https://amazon.mn/changepassword/${resetPasswordToken}`;
+  const info = await sendMail({
+    email: user.email,
+    subject: `NUUTS UG SERGEEH HUSELT`,
+    message: `SAIN BAINA UU <br>TA NUUTS UG SERGEEH HUSELT ILGELE<br>${link}`,
+  });
+  res.status(400).json({
+    succes: true,
+    resetPasswordToken
+  });
+});
 
-// };
+
+
+
+exports.resetPassword = asyncHandler(async (req, res, next) => {
+ 
+  // if (!req.body.resetPasswordToken || !req.body.password) {
+  //   throw new MyError(`ТА TOKEN BOLON NUUTS UGEE ОРУУЛНА УУ`, 403);
+  // }
+  const encrypted = crypto
+    .createHash("sha256", req.body.resetPasswordToken)
+    .update("resetToken")
+    .digest("hex");
+
+  
+  const user = await User.findOne({
+    resetPasswordToken: encrypted,
+  });
+  console.log(user)
+  user.password = req.body.password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordToken = undefined;
+  user.save()
+  res.status(400).json({
+    succes: true,
+    user,
+  });
+});
+

@@ -3,10 +3,13 @@ const router = express.Router()
 const { protect, authorize } = require("../middleware/protect");
 
 const {
-  register,login,getUsers,getUser,uptadeUser,deleteUser
+  register,forgotPassword,login,getUsers,getUser,uptadeUser,deleteUser,resetPassword
 } = require("../controller/user");
 router.route("/register").post(register);
 router.route("/login").post(login);
+router.route("/forgot-password").post(forgotPassword);
+router.route("/reset-password").post(resetPassword);
+
 router.use(protect)
 const {getUserBooks} = require('../controller/books');
 router.route("/").get(authorize("admin", "operator"), getUsers);
